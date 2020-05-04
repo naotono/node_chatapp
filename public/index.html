@@ -18,7 +18,7 @@
     <button id="chatSendBtn">SEND</button>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
     <script>
-        const socket = io();
+        const socket = io.connect("localhost:2929");
         const chatInput = document.querySelector("#chatInput");
         const chatSendBtn = document.querySelector("#chatSendBtn");
 

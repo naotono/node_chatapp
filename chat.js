@@ -1,10 +1,14 @@
 const express = require("express");
 const app = express();
-const http = require("http");
+const https = require("https");
 const socketio = require("socket.io");
 const path = require("path");
 
-const server = http.createServer(app);
+const server = https.createServer({
+    key: fs.readFileSync('/etc/letsencrypt/live/image-123.com/privkey.pem'),
+    cert: fs.readFileSync('/etc/letsencrypt/live/image-123.com/fullchain.pem'),
+}, app);
+
 const io = socketio(server);
 
 app.use(express.static(path.join(__dirname, "public")));
