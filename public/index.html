@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #chatMessage {
+            background: rgb(204, 204, 204);
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Chat App</h1>
+    <input type="text" id="chatInput">
+    <button id="chatSendBtn">SEND</button>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const chatInput = document.querySelector("#chatInput");
+        const chatSendBtn = document.querySelector("#chatSendBtn");
+
+        socket.on("message", message => {
+            const div = document.createElement("div");
+            div.id = "chatMessage";
+            const h1 = document.createElement("h1");
+            h1.textContent = message.msg;
+            const span = document.createElement("span");
+            span.textContent = message.id;
+            document.body.appendChild(div);
+            div.appendChild(h1);
+            div.appendChild(span);
+        })
+
+        chatSendBtn.addEventListener("click", e => {
+            e.preventDefault();
+            socket.emit("chatMessage", chatInput.value);
+        })
+    </script>
+</body>
+
+</html>
